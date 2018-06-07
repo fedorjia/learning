@@ -19,10 +19,9 @@ export default {
   },
   resolve (root, params, context, info) {
     const projection = getProjection(info.fieldNodes[0]);
-
     return BlogPostModel
       .findById(params.id)
-      .select(projection)
+      .select(projection) // { _id: 1, title: 1, description: 1 }
       .exec();
   }
 };

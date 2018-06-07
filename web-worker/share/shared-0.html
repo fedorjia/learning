@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>共享Workder - 乘法</title>
+    <style>
+        input {
+            width: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="result">Result（乘法）: <span></span></div>
+<form>
+    <label><input type="number" value="1" class="first"/></label> *
+    <label><input type="number" value="2" class="second"/></label>
+</form>
+
+<script>
+
+    // ！！！！注意 ！！！！
+    // 代码要放在web server 下启动，否则无法使用web worker，
+    // 建议使用chrome插件"Web Server"
+
+	const worker = new SharedWorker('./worker.js');
+
+    const $firstInput = document.querySelector('.first')
+	const $secondInput = document.querySelector('.second')
+    const $result = document.querySelector('.result span')
+
+    /**
+     * 向web worker发消息
+     */
+    function __postMessage() {
+		worker.port.postMessage({ v0: $firstInput.value, v1: $secondInput.value });
+    }
+
+    // onchange事件
+	$firstInput.onchange = () => {
+		__postMessage();
+		console.log('【UI thread】Message posted to worker from first input.');
+    }
+
+	$secondInput.onchange = () => {
+		__postMessage();
+		console.log('【UI thread】Message posted to worker from second input.');
+	}
+
+	/**
+     * 接收worker线程的消息
+	 */
+	worker.port.onmessage = function(e) {
+		$result.textContent = e.data;
+		console.log('【UI thread】Message received from worker', e.lastEventId);
+	}
+
+//	worker.port.start();
+
+	// 向web worker发消息
+	__postMessage();
+
+</script>
+</body>
+</html>
