@@ -8,3 +8,4 @@
 6. [WebAssembly](./web-assembly/README.md)
 7. [WebSocket](./web-socket/README.md)
 8. [WebWorker](./web-worker/README.md)
+9. [ServiceWorker](./service-worker/README.md)

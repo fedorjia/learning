@@ -1,33 +1,29 @@
-const DEBUG = true;
 const VER = 'v1';
 
 self.addEventListener('install', function (event) {
 
-	if(DEBUG) { // 开发环境，请设置
-		event.waitUntil(self.skipWaiting());
-	} else {
-		event.waitUntil(
-			caches.open(VER).then(function (cache) {
+	// event.waitUntil(self.skipWaiting());
+	event.waitUntil(
+		caches.open(VER).then(function (cache) {
 
-				// 缓存一些非重要资源，即使加载失败页不影响安装
-				// cache.addAll([
-				// 	'/', '/index.html', '/style.css',
-				// ])
+			// 缓存一些非重要资源，即使加载失败页不影响安装
+			// cache.addAll([
+			// 	'/', '/index.html', '/style.css',
+			// ])
 
-				// 缓存一些轻量、重要的资源
-				return cache.addAll([
-					'/',
-					'/index.html',
-					'/style.css',
-					'/app.js',
-					'/image-list.js',
-					'/gallery/bountyHunters.jpg',
-					'/gallery/myLittleVader.jpg',
-					'/gallery/snowTroopers.jpg'
-				]);
-			})
-		);
-	}
+			// 缓存一些轻量、重要的资源
+			return cache.addAll([
+				'/',
+				'/index.html',
+				'/style.css',
+				'/app.js',
+				'/image-list.js',
+				'/gallery/bountyHunters.jpg',
+				'/gallery/myLittleVader.jpg',
+				'/gallery/snowTroopers.jpg'
+			]);
+		})
+	);
 });
 
 
@@ -55,7 +51,7 @@ self.addEventListener('activate', function (event) {
 						if (clients && clients.length) {
 							clients.forEach(function (client) {
 								// 给每个已经打开的标签都 postMessage
-								client.postMessage('sw.update');
+								// client.postMessage('sw.update');
 							})
 						}
 					})
@@ -68,30 +64,24 @@ self.addEventListener('activate', function (event) {
 self.addEventListener('fetch', function (event) {
 
 	event.respondWith(caches.match(event.request).then(function (response) {
-		// 如果 Service Worker 有自己的返回，就直接返回，减少一次 http 请求
-		if (response) {
+		if (response) { // 如果cache match就直接返回，减少一次 http 请求
 			return response;
 		}
 
-		let requestClone = event.request.clone();
-		return fetch(requestClone).then(function (response) {
-			// 请求失败了，直接返回失败的结果就好了。。
-			if (!response || response.status !== 200) {
-				return response;
-			}
+		// 发http请求
+		return fetch(event.request);
 
-			// response may be used only once
-			// we need to save clone to put one copy in cache
-			// and serve second one
-			let responseClone = response.clone();
-
-			caches.open(VER).then(function (cache) {
-				// 请求成功的话，将请求缓存起来。
-				cache.put(event.request, responseClone);
-			});
-			return response;
-		}).catch(function () {
-			return caches.match('/gallery/myLittleVader.jpg');
-		});
+		// return fetch(event.request).then(function (response) {
+		// 	if (!response || response.status !== 200) {
+		// 		return response;
+		// 	}
+		// 	let responseClone = response.clone();
+		// 	caches.open(VER).then(function (cache) {
+		// 		cache.put(event.request, responseClone); // 请求成功的话，将请求缓存起来。
+		// 	});
+		// 	return response;
+		// }).catch(function () {
+		// 	return caches.match('/gallery/myLittleVader.jpg');
+		// });
 	}));
 });
