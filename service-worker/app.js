@@ -23,7 +23,7 @@ if ('serviceWorker' in navigator) {
 	 */
 	navigator.serviceWorker.addEventListener('message', function (e) {
 		if (e.data === 'sw.update') {
-			// 如果代码走到了在这里，就知道了，Service Worker 已经更新完成了
+			// 如果代码走到了在这里，就知道Service Worker 已经更新完成了
 			// 可以做点什么事情让用户体验更好
 			alert('new feature, try it.');
 			location.reload();
@@ -45,7 +45,6 @@ if ('serviceWorker' in navigator) {
 }
 
 // function for loading each image via XHR
-
 function imgLoad(imgJSON) {
 	// return a promise for an image loading
 	return new Promise(function (resolve, reject) {
@@ -87,8 +86,7 @@ window.onload = function () {
 			var imageURL = window.URL.createObjectURL(arrayResponse[0]);
 
 			myImage.src = imageURL;
-			myImage.setAttribute('alt', arrayResponse[1].alt);
-			myCaption.innerHTML = '<strong>' + arrayResponse[1].name + '</strong>: Taken by ' + arrayResponse[1].credit;
+			myCaption.innerHTML = '<strong>' + arrayResponse[1].name + '</strong>';
 
 			imgSection.appendChild(myFigure);
 			myFigure.appendChild(myImage);

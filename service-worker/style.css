@@ -13,20 +13,27 @@ section {
 figure {
   width: 100%;
   margin: 0;
+  position: relative;
+  margin-bottom: 20px;
+  box-sizing: border-box;
 }
 
 img {
-  width: 100%;	
-  box-shadow: 2px 2px 1px black;
+  width: 100%;
 }
 
 caption {
   display: block;
-  margin: 0 auto 1rem;
-  width: 70%;
+  margin: 0 auto;
   font-size: 1.2rem;
-  line-height: 1.5;
-  padding: 5px;
-  background: #ccc;
-  box-shadow: 1px 1px 1px black;
+  line-height: 2;
+  padding: 6px;
+  background: #fff;
+  opacity: 0.8;
+
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
 }
