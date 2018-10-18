@@ -3,7 +3,7 @@ var Path = 'gallery/';
 var Gallery = { 'images' : [
 
   {
-    'name'  : 'Darth Vader1',
+    'name'  : 'Darth Vader7',
     'url': 'gallery/myLittleVader.jpg'
   },
 

@@ -1,11 +1,11 @@
 // Copyright 2016 Google Inc.
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //      http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -74,13 +74,13 @@ self.addEventListener('activate', function(e) {
 
 self.addEventListener('fetch', function(e) {
   console.log('[Service Worker] Fetch', e.request.url);
-  var dataUrl = 'https://query.yahooapis.com/v1/public/yql';
+  const dataUrl = 'https://query.yahooapis.com/v1/public/yql';
   if (e.request.url.indexOf(dataUrl) > -1) {
     /*
      * When the request URL contains dataUrl, the app is asking for fresh
      * weather data. In this case, the service worker always goes to the
      * network and then caches the response. This is called the "Cache then
-     * network" strategy:
+     * network" strategy
      * https://jakearchibald.com/2014/offline-cookbook/#cache-then-network
      */
     e.respondWith(

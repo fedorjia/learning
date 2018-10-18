@@ -1,17 +1,17 @@
-const VER = 'v1';
+const VER = 'v8';
 
 self.addEventListener('install', function (event) {
-  console.log('sw install...')
+  console.log('[sw] install.')
 
   // !!!! 方式一：缓存静态资源 !!!!
 	// event.waitUntil(
 	// 	caches.open(VER).then(function (cache) {
-	//
+  //
 	// 		// 缓存一些非重要资源，即使加载失败页不影响安装
 	// 		// cache.addAll([
 	// 		// 	'/', '/index.html', '/style.css',
 	// 		// ])
-	//
+  //
 	// 		// 缓存一些轻量、重要的资源
 	// 		return cache.addAll([
 	// 			'/',
@@ -32,7 +32,7 @@ self.addEventListener('install', function (event) {
 
 
 self.addEventListener('activate', function (event) {
-  console.log('sw activate...')
+  console.log('[sw] activate.')
 	event.waitUntil(
 		Promise.all([
 			// 更新客户端
@@ -55,7 +55,7 @@ self.addEventListener('activate', function (event) {
 						if (clients && clients.length) {
 							clients.forEach(function (client) {
 								// 给每个已经打开的标签都 postMessage
-								client.postMessage('sw.update');
+								// client.postMessage('sw.update');
 							})
 						}
 					})
@@ -70,6 +70,8 @@ self.addEventListener('fetch', function (event) {
 		if (response) { // 如果cache match就直接返回，减少一次 http 请求
 			return response;
 		}
+    console.log('[sw] fetch', event.request.url);
+
 		// !!!! 方式一：直接HTTP请求 （对应install部分的方式一）!!!!
 		// return fetch(event.request);
 
