@@ -16,6 +16,12 @@ app.use('/graphql', graphqlHTTP(req => ({
 // Connect mongo database
 mongoose.connect('mongodb://localhost/graphql');
 
+// set mongoose valueof
+const { ObjectId } = mongoose.Types;
+ObjectId.prototype.valueOf = function() {
+  return this.toString();
+};
+
 // start server
 const server = app.listen(8080, () => {
   console.log('Listening at port', server.address().port);

@@ -3,7 +3,6 @@ import {
   GraphQLID,
   GraphQLNonNull
 } from 'graphql';
-import {Types} from 'mongoose';
 
 import blogPostType from '../../types/blog-post';
 import getProjection from '../../get-projection';
