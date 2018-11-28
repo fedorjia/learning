@@ -11,7 +11,6 @@ export default {
   type: blogPostType,
   args: {
     _id: {
-      name: '_id',
       type: new GraphQLNonNull(GraphQLID)
     }
   },

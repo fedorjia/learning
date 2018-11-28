@@ -7,7 +7,7 @@ import schema from './graphql';
 const app = express();
 
 // GraphqQL server route
-app.use('/graphql', graphqlHTTP(req => ({
+app.use('/graphql', graphqlHTTP((req) => ({
   schema,
   pretty: true,
   graphiql: true
