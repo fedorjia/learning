@@ -131,6 +131,21 @@ class BinarySearchTree {
       }
     }
   }
+
+  /**
+   * 中序遍历二叉树
+   */
+  inOrderTraverse(cb) {
+    this._inOrderTraverseNode(root, cb);
+  }
+
+  _inOrderTraverseNode(node, cb) {
+    if (node !== null) {
+      this._inOrderTraverseNode(node.left, cb);
+      cb(node);
+      this._inOrderTraverseNode(node.right, cb);
+    }
+  }
 }
 
 module.exports = BinarySearchTree
